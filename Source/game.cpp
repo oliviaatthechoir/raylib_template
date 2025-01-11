@@ -365,7 +365,6 @@ void Game::Render()
 		//background render LEAVE THIS AT TOP
 		background.Render();
 
-		//DrawText("GAMEPLAY", 50, 30, 40, YELLOW);
 		DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 		DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
 
@@ -373,38 +372,27 @@ void Game::Render()
 		player.Render(resources.shipTextures[player.activeTexture]);
 
 		//projectile rendering
-		for (int i = 0; i < Projectiles.size(); i++)
+		for (auto& projectile : Projectiles)
 		{
-			Projectiles[i].Render(resources.laserTexture);
+			projectile.Render(resources.laserTexture);
 		}
 
 		// wall rendering 
-		for (int i = 0; i < Walls.size(); i++)
+		for (auto& wall : Walls)
 		{
-			Walls[i].Render(resources.barrierTexture); 
+			wall.Render(resources.barrierTexture); 
 		}
 
 		//alien rendering  
-		for (int i = 0; i < Aliens.size(); i++)
+		for (auto& alien : Aliens)
 		{
-			Aliens[i].Render(resources.alienTexture);
+			alien.Render(resources.alienTexture);
 		}
-
-
-
-
 
 
 		break;
 	case State::ENDSCREEN:
-		//Code
-		//DrawText("END", 50, 50, 40, YELLOW);
-
-
-		
-
-		
-
+	
 
 		if (newHighScore)
 		{
