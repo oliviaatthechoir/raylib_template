@@ -4,37 +4,21 @@
 #include <string>
 #include "level.h"
 
-void LoadLevelFromFile(const std::string& filename) 
+
+void Entity::LoadLevelFromAFile(const std::string& filename)
 {
-	std::ifstream file(filename); 
+    std::ifstream file(filename);
 
-	if (file.is_open())
-	{
-		std::vector<Entity> entities;
-		float x, y; 
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open file " << filename << std::endl;
+        return;
+    }
 
-		while (file >> x >> y) 
-		{
-		Entity entity;  
-		entity.x = x;
-		entity.y = y; 
-		entities.push_back(entity); 
-		}
+    file >> x >> y; 
 
-	    file.close(); 
+    if (file.fail()) {
+        std::cerr << "Error: Failed to read position from file " << filename << std::endl;
+    }
 
-		for (int i = 0; i < entities.size(); i++)
-		{
-			const Entity& entity = entities[i]; 
-			std::cout << "Spawn entity at X:" << entity.x << ",Y:" << entity.y << std::endl; 
-		}
-	}
-	else 
-	{
-		std::cout << "Unable to open file:" << filename << std::endl; 
-	}
-	
+    file.close();
 }
-
-
-	

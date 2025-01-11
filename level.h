@@ -6,7 +6,8 @@
 
 struct Entity
 {
-	float x, y;
+	float x;
+	float y;
 
 	void LoadLevelFromAFile(const std::string& filename);
 };
