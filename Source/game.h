@@ -42,7 +42,7 @@ public:
 	EntityType type = EntityType::PLAYER;
 
 	void Initialize();
-	void Render(Texture2D texture);
+	void Render(Texture2D texture) const;
 	void Update();
 	
 };

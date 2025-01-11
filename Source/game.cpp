@@ -644,7 +644,7 @@ void Player::Update()
 	
 }
 
-void Player::Render(Texture2D texture) 
+void Player::Render(Texture2D texture) const
 {
 	float window_height = GetScreenHeight(); 
 
