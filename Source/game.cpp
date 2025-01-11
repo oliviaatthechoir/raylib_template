@@ -466,7 +466,7 @@ void Game::Render()
 
 			for (int i = 0; i < Leaderboard.size(); i++)
 			{
-				char* tempNameDisplay = Leaderboard[i].name.data();
+				char const* tempNameDisplay = Leaderboard[i].name.data();
 				DrawText(tempNameDisplay, 50, 140 + (i * 40), 40, YELLOW);
 				DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
 			}
@@ -508,7 +508,7 @@ bool Game::CheckNewHighScore()
 	return false;
 }
 
-void Game::InsertNewHighScore(std::string name)
+void Game::InsertNewHighScore(const std::string& name)
 {
 	PlayerData newData;
 	newData.name = name;
@@ -529,20 +529,9 @@ void Game::InsertNewHighScore(std::string name)
 	}
 }
 
-void Game::LoadLeaderboard()
-{
-	// CLEAR LEADERBOARD
 
-	// OPEN FILE
 
-	// READ DATA
-
-	// WRITE DATA ONTO LEADERBOARD
-
-	//CLOSE FILE
-}
-
-void Game::SaveLeaderboard()
+void Game::SaveLeaderboard() const
 {
 	// SAVE LEADERBOARD AS ARRAY
 

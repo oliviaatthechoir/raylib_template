@@ -22,7 +22,7 @@ enum struct EntityType
 
 struct PlayerData
 {
-	std::string name;
+	std::string_view name;
 	int score;
 };
 
@@ -168,10 +168,10 @@ public:
 
 	bool CheckNewHighScore();
 
-	void InsertNewHighScore(std::string name);
+	void InsertNewHighScore(const std::string& name);
 
-	void LoadLeaderboard();
-	void SaveLeaderboard();
+
+	void SaveLeaderboard() const;
 
 
 	// Entity Storage and Resources
@@ -199,7 +199,7 @@ public:
 
 
 	//TEXTBOX ENTER
-	std::string name = " ";      //One extra space required for null terminator char '\0'
+	char name[9 + 1] = "\0";     //One extra space required for null terminator char '\0'
 	int letterCount = 0;
 
 	Rectangle textBox = { 600, 500, 225, 50 };
