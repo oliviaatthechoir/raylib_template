@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 #include <fstream>
-
+#include <algorithm> 
 
 // MATH FUNCTIONS
 float lineLength(Vector2 A, Vector2 B) //Uses pythagoras to calculate the length of a line
@@ -138,8 +138,8 @@ void Game::Update()
 
 
 		// Update background with offset
-		playerPos = { player.x_pos, (float)player.player_base_height };
-		cornerPos = { 0, (float)player.player_base_height };
+		playerPos = { player.x_pos, player.player_base_height };
+		cornerPos = { 0, player.player_base_height };
 		offset = lineLength(playerPos, cornerPos) * -1;
 		background.Update(offset / 15);
 
@@ -205,7 +205,7 @@ void Game::Update()
 		//MAKE PROJECTILE
 		if (IsKeyPressed(KEY_SPACE))
 		{
-			float window_height = (float)GetScreenHeight();
+			auto window_height = (float)GetScreenHeight();
 			Projectile newProjectile;
 			newProjectile.position.x = player.x_pos;
 			newProjectile.position.y = window_height - 130;
@@ -459,8 +459,6 @@ void Game::Render()
 				DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
 			}
 		}
-
-		
 
 
 		break;
