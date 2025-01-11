@@ -145,14 +145,14 @@ void Game::Update()
 
 
 		//UPDATE PROJECTILE
-		for (int i = 0; i < Projectiles.size(); i++)
+		for (auto& projectile : Projectiles)
 		{
-			Projectiles[i].Update();
+			projectile.Update(); 
 		}
 		//UPDATE PROJECTILE
-		for (int i = 0; i < Walls.size(); i++)
+		for (auto& wall : Walls)
 		{
-			Walls[i].Update();
+			wall.Update(); 
 		}
 
 		//CHECK ALL COLLISONS HERE
@@ -595,7 +595,7 @@ bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineSta
 void Player::Initialize() 
 {
 	
-	float window_width = (float)GetScreenWidth();
+	auto window_width = (float)GetScreenWidth();
 	x_pos = window_width / 2;
 	std::cout<< "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
 
