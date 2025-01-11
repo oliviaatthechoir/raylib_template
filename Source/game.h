@@ -22,7 +22,7 @@ enum struct EntityType
 
 struct PlayerData
 {
-	std::string_view name;
+	std::string name;
 	int score;
 };
 
@@ -114,8 +114,6 @@ struct Star
 
 struct Background
 {
-	
-
 	std::vector<Star> Stars;
 
 	void Initialize(int starAmount);
@@ -207,5 +205,12 @@ public:
 
 	int framesCounter = 0;
 
+	bool operator==(const Game& other) const = default;
 
+	Game(const State& gameState, int score, int wallCount, float shootTimer, const Rectangle& rec, int formationWidth, int formationHeight, int alienSpacing, int formationX, int formationY, bool newHighScore, const Resources& resources, const Player& player, const std::vector<Projectile>& Projectiles, const std::vector<Wall>& Walls, const std::vector<Alien>& Aliens, const std::vector<PlayerData>& Leaderboard, const Background& background, const Vector2& playerPos, const Vector2& alienPos, const Vector2& cornerPos, float offset, char[9 + 1] name, int letterCount, const Rectangle& textBox, bool mouseOnText, int framesCounter)
+		: gameState(gameState), score(score), wallCount(wallCount), shootTimer(shootTimer), rec(rec), formationWidth(formationWidth), formationHeight(formationHeight), alienSpacing(alienSpacing), formationX(formationX), formationY(formationY), newHighScore(newHighScore), resources(resources), player(player), Projectiles(Projectiles), Walls(Walls), Aliens(Aliens), Leaderboard(Leaderboard), background(background), playerPos(playerPos), alienPos(alienPos), cornerPos(cornerPos), offset(offset), name(name), letterCount(letterCount), textBox(textBox), mouseOnText(mouseOnText), framesCounter(framesCounter)
+	{
+	}
+
+	
 };
