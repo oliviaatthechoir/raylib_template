@@ -126,8 +126,12 @@ struct Background
 
 struct Game
 {
+public: 
+
+	Game() = default;
+
 	// Gamestate
-	State gameState = {};
+	State gameState = State::STARTSCREEN; 
 
 	// Score
 	int score;
@@ -202,5 +206,6 @@ struct Game
 	bool mouseOnText = false;
 
 	int framesCounter = 0;
+
 
 };
