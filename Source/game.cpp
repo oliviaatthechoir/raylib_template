@@ -683,7 +683,7 @@ void Projectile::Update()
 	}
 }
 
-void Projectile::Render(Texture2D texture)
+void Projectile::Render(Texture2D texture) const 
 {
 	
 	DrawTexturePro(texture,

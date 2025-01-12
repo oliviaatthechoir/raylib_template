@@ -63,7 +63,7 @@ public:
 
 	void Update();
 
-	void Render(Texture2D texture);
+	void Render(Texture2D texture) const;
 };
 
 struct Wall 
