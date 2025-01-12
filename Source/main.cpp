@@ -50,10 +50,6 @@ int main(void)
     InitAudioDevice();
 
 
-    
-
-
-
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
