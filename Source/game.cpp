@@ -32,8 +32,8 @@ bool pointInCircle(Vector2 circlePos, float radius, Vector2 point) // Uses pytha
 void Game::Start()
 {
 	// creating walls 
-	float window_width = (float)GetScreenWidth(); 
-	float window_height = (float)GetScreenHeight(); 
+	auto window_width = (float)GetScreenWidth(); 
+	auto window_height = (float)GetScreenHeight(); 
 	float wall_distance = window_width / (wallCount + 1); 
 	for (int i = 0; i < wallCount; i++)
 	{
@@ -114,11 +114,11 @@ void Game::Update()
 		player.Update();
 		
 		//Update Aliens and Check if they are past player
-		for (int i = 0; i < Aliens.size(); i++)
+		for (auto& alien : Aliens)
 		{
-			Aliens[i].Update(); 
+			alien.Update(); 
 
-			if (Aliens[i].position.y > GetScreenHeight() - player.player_base_height)
+			if (alien.position.y > GetScreenHeight() - player.player_base_height)
 			{
 				End();
 			}
