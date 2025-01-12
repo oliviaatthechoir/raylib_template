@@ -436,17 +436,19 @@ void Game::Render()
 
 		}
 		else {
-			// If no highscore or name is entered, show scoreboard and call it a day
-			DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
+			if (!newHighScore) {
+				// If no highscore or name is entered, show scoreboard and call it a day
+				DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
 
-			DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
+				DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
 
-			for (int i = 0; i < Leaderboard.size(); i++)
-			{
-				char const* tempNameDisplay = Leaderboard[i].name.data();
-				DrawText(tempNameDisplay, 50, 140 + (i * 40), 40, YELLOW);
-				DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
+				for (int i = 0; i < Leaderboard.size(); i++)
+				{
+					DrawText(Leaderboard[i].name.c_str(), 50, 140 + (i * 40), 40, YELLOW); 
+					DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
+				}
 			}
+		
 		}
 
 
@@ -498,10 +500,12 @@ void Game::InsertNewHighScore(const std::string_view& name)
 
 			Leaderboard.pop_back();
 
-			i = Leaderboard.size();
+			//i = Leaderboard.size();
+			break; 
 
 		}
 	}
+	SaveLeaderboard(); 
 }
 
 
@@ -513,17 +517,23 @@ void Game::SaveLeaderboard() const
 	// OPEN FILE
 	std::fstream file;
 
-	file.open("Leaderboard");
+	file.open("Leaderboard", std::ios::out | std::ios::trunc);
 
 	if (!file)
 	{
 		std::cout << "file not found \n";
-
+		return; 
 	}
 	else
 	{
 		std::cout << "file found \n";
 	}
+
+	for (const auto& player : Leaderboard) {
+		file << player.name << " " << player.score << '\n'; 
+	}
+
+	file.close(); 
 	// CLEAR FILE
 
 	// WRITE ARRAY DATA INTO FILE
