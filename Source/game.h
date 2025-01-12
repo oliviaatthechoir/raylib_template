@@ -166,7 +166,7 @@ public:
 
 	bool CheckNewHighScore();
 
-	void InsertNewHighScore(const std::string& name);
+	void InsertNewHighScore(const std::string_view& name);
 
 
 	void SaveLeaderboard() const;
