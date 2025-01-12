@@ -109,7 +109,7 @@ struct Star
 	Color color = GRAY;
 	float size = 0;
 	void Update(float starOffset);
-	void Render();
+	void Render() const;
 };
 
 struct Background

@@ -766,11 +766,7 @@ void Alien::Update()
 
 void Alien::Render(Texture2D texture) const 
 {
-	//DrawRectangle((int)position.x - 25, (int)position.y, 30, 30, RED);
-	//DrawCircle((int)position.x, (int)position.y, radius, GREEN);
 	
-	
-
 	DrawTexturePro(texture,
 		{
 			0,
@@ -797,7 +793,7 @@ void Star::Update(float starOffset)
 
 }
 
-void Star::Render()
+void Star::Render() const 
 {
 	DrawCircle((int)position.x, (int)position.y, size, color);
 }
