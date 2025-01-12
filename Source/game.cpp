@@ -740,8 +740,6 @@ void Wall::Update()
 
 void Alien::Update() 
 {
-	int window_width = GetScreenWidth(); 
-
 	if (moveRight)
 	{
 		position.x += speed; 
