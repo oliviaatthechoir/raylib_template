@@ -118,7 +118,7 @@ struct Background
 
 	void Initialize(int starAmount);
 	void Update(float offset);
-	void Render();
+	void Render() const;
 
 };
 

@@ -827,11 +827,11 @@ void Background::Update(float offset)
 	
 }
 
-void Background::Render()
+void Background::Render() const
 {
-	for (int i = 0; i < Stars.size(); i++)
+	for (auto& star : Stars)
 	{
-		Stars[i].Render();
+		star.Render();
 	}
 }
 
