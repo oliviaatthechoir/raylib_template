@@ -811,7 +811,7 @@ void Background::Initialize(int starAmount)
 		//random color?
 		newStar.color = SKYBLUE;
 
-		newStar.size = GetRandomValue(1, 4) / 2;
+		newStar.size = GetRandomValue(1, 4) / static_cast<float>(2);
 
 		Stars.push_back(newStar);
 
