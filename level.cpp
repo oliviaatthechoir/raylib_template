@@ -20,5 +20,5 @@ void Entity::LoadLevelFromAFile(const std::string& filename)
         std::cerr << "Error: Failed to read position from file " << filename << std::endl;
     }
 
-    file.close();
+   
 }
