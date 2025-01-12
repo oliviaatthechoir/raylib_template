@@ -356,19 +356,19 @@ void Game::Render()
 		player.Render(resources.shipTextures[player.activeTexture]);
 
 		//projectile rendering
-		for (auto& projectile : Projectiles)
+		for (auto const& projectile : Projectiles)
 		{
 			projectile.Render(resources.laserTexture);
 		}
 
 		// wall rendering 
-		for (auto& wall : Walls)
+		for (auto const& wall : Walls)
 		{
 			wall.Render(resources.barrierTexture); 
 		}
 
 		//alien rendering  
-		for (auto& alien : Aliens)
+		for (auto const& alien : Aliens)
 		{
 			alien.Render(resources.alienTexture);
 		}
