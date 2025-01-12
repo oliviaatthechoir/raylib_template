@@ -527,7 +527,7 @@ void Game::SaveLeaderboard() const
 }
 
 
-bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd)
+bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineStart, Vector2 lineEnd) const
 {
 	// our objective is to calculate the distance between the closest point on the line to the centre of the circle, 
 	// and determine if it is shorter than the radius.
@@ -594,11 +594,9 @@ bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineSta
 
 void Player::Initialize() 
 {
-	
 	auto window_width = (float)GetScreenWidth();
 	x_pos = window_width / 2;
 	std::cout<< "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
-
 }
 
 void Player::Update() 
@@ -728,14 +726,10 @@ void Wall::Render(Texture2D texture) const
 
 void Wall::Update() 
 {
-
-	// set walls as inactive when out of health
 	if (health < 1)
 	{
 		active = false;
 	}
-
-
 }
 
 void Alien::Update() 
