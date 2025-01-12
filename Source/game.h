@@ -77,7 +77,7 @@ public:
 	int radius = 60;
 
 
-	void Render(Texture2D texture); 
+	void Render(Texture2D texture) const; 
 	void Update(); 
 };
 
