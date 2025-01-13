@@ -499,7 +499,6 @@ void Game::InsertNewHighScore(const std::string_view& name)
 
 			Leaderboard.pop_back();
 
-			//i = Leaderboard.size();
 			break; 
 
 		}
