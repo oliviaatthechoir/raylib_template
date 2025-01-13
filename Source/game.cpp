@@ -336,36 +336,7 @@ void Game::Render()
 
 		break;
 	case State::GAMEPLAY:
-		//Code
-
-
-		//background render LEAVE THIS AT TOP
-		background.Render();
-
-		DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
-		DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
-
-		//player rendering 
-		player.Render(resources.shipTextures[player.activeTexture]);
-
-		//projectile rendering
-		for (auto const& projectile : Projectiles)
-		{
-			projectile.Render(resources.laserTexture);
-		}
-
-		// wall rendering 
-		for (auto const& wall : Walls)
-		{
-			wall.Render(resources.barrierTexture); 
-		}
-
-		//alien rendering  
-		for (auto const& alien : Aliens)
-		{
-			alien.Render(resources.alienTexture);
-		}
-
+		RenderGamePlay(); 
 
 		break;
 	case State::ENDSCREEN:
@@ -458,6 +429,30 @@ void Game::RenderStartScreen() const {
 	
 	DrawText("SPACE INVADERS", 200, 100, 160, YELLOW);
 	DrawText("PRESS SPACE TO BEGIN", 200, 350, 40, YELLOW);
+}
+
+void Game::RenderGamePlay() {
+	background.Render(); 
+
+	DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
+	DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
+
+	player.Render(resources.shipTextures[player.activeTexture]);
+
+	for (const auto& projectile : Projectiles)
+	{
+		projectile.Render(resources.laserTexture);
+	}
+
+	for (const auto& wall : Walls)
+	{
+		wall.Render(resources.barrierTexture);
+	}
+
+	for (const auto& alien : Aliens)
+	{
+		alien.Render(resources.alienTexture);
+	}
 }
 
 void Game::SpawnAliens()
