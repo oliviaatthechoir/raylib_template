@@ -332,11 +332,7 @@ void Game::Render()
 	switch (gameState)
 	{
 	case State::STARTSCREEN:
-		//Code
-		DrawText("SPACE INVADERS", 200, 100, 160, YELLOW);
-
-		DrawText("PRESS SPACE TO BEGIN", 200, 350, 40, YELLOW);
-
+		RenderStartScreen(); 
 
 		break;
 	case State::GAMEPLAY:
@@ -456,6 +452,12 @@ void Game::Render()
 		//SHOULD NOT HAPPEN
 		break;
 	}
+}
+
+void Game::RenderStartScreen() const {
+	
+	DrawText("SPACE INVADERS", 200, 100, 160, YELLOW);
+	DrawText("PRESS SPACE TO BEGIN", 200, 350, 40, YELLOW);
 }
 
 void Game::SpawnAliens()

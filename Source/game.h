@@ -158,7 +158,11 @@ public:
 	void Launch();
 
 	void Update();
+
 	void Render();
+	void RenderStartScreen() const; 
+	void RenderGamePlay(); 
+	void RenderEndScreen(); 
 
 	void SpawnAliens();
 
