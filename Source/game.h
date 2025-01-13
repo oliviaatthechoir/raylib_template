@@ -165,7 +165,7 @@ public:
 	void RenderEndScreen(); 
 
 	void RenderHighScoreInput();
-	void RenderCursorBlink();
+	void RenderCursorBlink() const;
 	void RenderLeaderboard(); 
 
 	void SpawnAliens();

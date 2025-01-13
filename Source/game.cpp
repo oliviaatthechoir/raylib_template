@@ -421,7 +421,7 @@ void Game::RenderHighScoreInput() {
 
 }
 
-void Game::RenderCursorBlink() {
+void Game::RenderCursorBlink() const {
 	if (letterCount < 9 && ((framesCounter / 20) % 2) == 0)
 	{
 		int textWidth = MeasureText(name.c_str(), 40);
