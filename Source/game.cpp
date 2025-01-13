@@ -610,7 +610,7 @@ void Player::Initialize()
 {
 	auto window_width = (float)GetScreenWidth();
 	x_pos = window_width / 2;
-	std::cout<< "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << GetScreenHeight() - player_base_height << std::endl;
+	std::cout<< "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << (float)GetScreenHeight() - player_base_height << std::endl;
 }
 
 void Player::Update() 
