@@ -6,11 +6,11 @@
 struct Resources 
 {
 public: 
+	Resources(); 
+	~Resources(); 
 
 	void Load();
 
-	Resources(); 
-	~Resources(); 
 
 	std::vector<Texture2D> shipTextures;
 	Texture2D alienTexture;

@@ -3,6 +3,8 @@
 
 Resources::Resources() = default;
 
+
+
 void Resources::Load()
 {
 	std::cout << "Loading resources...\n"; 
