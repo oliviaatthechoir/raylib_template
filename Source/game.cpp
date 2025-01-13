@@ -344,7 +344,7 @@ void Game::Render()
 
 		break;
 	default:
-		//SHOULD NOT HAPPEN
+		
 		break;
 	}
 }

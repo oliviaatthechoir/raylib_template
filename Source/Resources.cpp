@@ -1,6 +1,8 @@
 #include "Resources.h"
 #include <iostream>;
 
+Resources::Resources() = default;
+
 void Resources::Load()
 {
 	std::cout << "Loading resources...\n"; 
@@ -13,6 +15,7 @@ void Resources::Load()
 
 	laserTexture = LoadTexture("./Assets/Laser.png");
 }
+
 
 Resources::~Resources() {
 	

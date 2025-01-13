@@ -5,8 +5,11 @@
 
 struct Resources 
 {
+public: 
+
 	void Load();
 
+	Resources(); 
 	~Resources(); 
 
 	std::vector<Texture2D> shipTextures;
