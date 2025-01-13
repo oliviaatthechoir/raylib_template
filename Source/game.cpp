@@ -680,7 +680,7 @@ void Player::Render(Texture2D texture) const
 
 void Projectile::Update()
 {
-	position.y -= speed;
+	position.y -= (float)speed;
 
 	// UPDATE LINE POSITION
 	lineStart.y = position.y - 15;
