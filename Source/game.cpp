@@ -250,47 +250,46 @@ void Game::Update()
 
 	break;
 	case State::ENDSCREEN:
-		//Code
-	
+		
 		if (!newHighScore && IsKeyPressed(KEY_ENTER))
 		{
 			
-			Continue();  // Reset the game state for a new game
+			Continue();  
 			return;
 			
 		}
 
-		// If the player is entering a new high score
+		
 		if (newHighScore)
 		{
-			// Check if the mouse is over the text box
+			
 			if (CheckCollisionPointRec(GetMousePosition(), textBox))
 				mouseOnText = true;
 			else
 				mouseOnText = false;
 
-			// Handle cursor and input logic
+			
 			if (mouseOnText)
 			{
-				// Set the window's cursor to the I-Beam
+				
 				SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
-				// Get char pressed on the queue
+				
 				int key = GetCharPressed();
 
-				// Check if more characters have been pressed on the same frame
+				
 				while (key > 0)
 				{
-					// NOTE: Only allow keys in range [32..125]
+					
 					if ((key >= 32) && (key <= 125) && (name.size() < 9))
 					{
-						name += static_cast<char>(key); // Append character to name
+						name += static_cast<char>(key); 
 					}
 
-					key = GetCharPressed();  // Check next character in the queue
+					key = GetCharPressed(); 
 				}
 
-				// Remove characters if backspace is pressed
+				
 				if (IsKeyPressed(KEY_BACKSPACE) && !name.empty())
 				{
 					name.pop_back();
@@ -301,7 +300,7 @@ void Game::Update()
 				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 			}
 
-			// Handle blinking cursor animation
+			
 			if (mouseOnText)
 			{
 				framesCounter++;
@@ -311,18 +310,18 @@ void Game::Update()
 				framesCounter = 0;
 			}
 
-			// If the name is the right length and Enter is pressed, finalize the high score input
+			
 			if (IsKeyPressed(KEY_ENTER) && !name.empty())
 			{
-				InsertNewHighScore(name);  // Save the player's name and score
-				newHighScore = false;     // Exit high score input mode
+				InsertNewHighScore(name);  
+				newHighScore = false;     
 			}
 		}
 
 		break;
 
 	default:
-		//SHOULD NOT HAPPEN
+		
 		break;
 	}
 }
