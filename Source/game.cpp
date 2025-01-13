@@ -750,9 +750,9 @@ void Alien::Update()
 {
 	if (moveRight)
 	{
-		position.x += speed; 
+		position.x += (float)speed; 
 
-		if (position.x >= GetScreenWidth())
+		if (position.x >= (float)GetScreenWidth())
 		{
 			moveRight = false; 
 			position.y += 50; 
@@ -760,7 +760,7 @@ void Alien::Update()
 	}
 	else 
 	{
-		position.x -= speed; 
+		position.x -= (float)speed; 
 
 		if (position.x <= 0)
 		{
