@@ -164,7 +164,7 @@ public:
 	void RenderGamePlay(); 
 	void RenderEndScreen(); 
 
-	void RenderHighScoreInput();
+	void RenderHighScoreInput() const;
 	void RenderCursorBlink() const;
 	void RenderLeaderboard(); 
 

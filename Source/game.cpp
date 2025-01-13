@@ -389,7 +389,7 @@ void Game::RenderEndScreen() {
 	}
 }
 
-void Game::RenderHighScoreInput() {
+void Game::RenderHighScoreInput() const{
 	DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
 	DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
 
