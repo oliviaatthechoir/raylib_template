@@ -156,48 +156,48 @@ void Game::Update()
 		}
 
 		//CHECK ALL COLLISONS HERE
-		for (int i = 0; i < Projectiles.size(); i++)
+		for (auto& projectile : Projectiles)
 		{
-			if (Projectiles[i].type == EntityType::PLAYER_PROJECTILE)
+			if (projectile.type == EntityType::PLAYER_PROJECTILE)
 			{
-				for (int a = 0; a < Aliens.size(); a++)
+				for (auto& alien : Aliens)
 				{
-					if (CheckCollision(Aliens[a].position, Aliens[a].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+					if (CheckCollision(alien.position, alien.radius, projectile.lineStart, projectile.lineEnd))
 					{
 						// Kill!
 						std::cout << "Hit! \n";
 						// Set them as inactive, will be killed later
-						Projectiles[i].active = false;
-						Aliens[a].active = false;
+						projectile.active = false;
+						alien.active = false;
 						score += 100;
 					}
 				}
 			}
 
 			//ENEMY PROJECTILES HERE
-			for (int i = 0; i < Projectiles.size(); i++)
+			for (auto& projectile : Projectiles)
 			{
-				if (Projectiles[i].type == EntityType::ENEMY_PROJECTILE)
+				if (projectile.type == EntityType::ENEMY_PROJECTILE)
 				{
-					if (CheckCollision({player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+					if (CheckCollision({player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, projectile.lineStart, projectile.lineEnd))
 					{
 						std::cout << "dead!\n"; 
-						Projectiles[i].active = false; 
+						projectile.active = false; 
 						player.lives -= 1; 
 					}
 				}
 			}
 
 
-			for (int b = 0; b < Walls.size(); b++)
+			for (auto& wall : Walls)
 			{
-				if (CheckCollision(Walls[b].position, Walls[b].radius, Projectiles[i].lineStart, Projectiles[i].lineEnd))
+				if (CheckCollision(wall.position, (float)wall.radius, projectile.lineStart, projectile.lineEnd))
 				{
 					// Kill!
 					std::cout << "Hit! \n";
 					// Set them as inactive, will be killed later
-					Projectiles[i].active = false;
-					Walls[b].health -= 1;
+					projectile.active = false;
+					wall.health -= 1;
 				}
 			}
 		}
