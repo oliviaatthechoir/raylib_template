@@ -164,6 +164,10 @@ public:
 	void RenderGamePlay(); 
 	void RenderEndScreen(); 
 
+	void RenderHighScoreInput();
+	void RenderCursorBlink();
+	void RenderLeaderboard(); 
+
 	void SpawnAliens();
 
 	bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const;

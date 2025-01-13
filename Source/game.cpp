@@ -340,83 +340,7 @@ void Game::Render()
 
 		break;
 	case State::ENDSCREEN:
-	
-
-		if (newHighScore)
-		{
-			DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
-
-
-
-			// BELOW CODE IS FOR NAME INPUT RENDER
-			DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
-
-			DrawRectangleRec(textBox, LIGHTGRAY);
-			if (mouseOnText)
-			{
-				// HOVER CONFIRMIATION
-				DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, RED);
-			}
-			else
-			{
-				DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, DARKGRAY);
-			}
-
-			if (name.empty()) {
-				DrawText(" ", (int)textBox.x + 5, (int)textBox.y + 8, 40, GRAY); 
-			}
-			else
-			{
-				DrawText(name.c_str(), (int)textBox.x + 5, (int)textBox.y + 8, 40, MAROON);
-			}
-			//Draw the name being typed out
-
-			//Draw the text explaining how many characters are used
-			DrawText(TextFormat("INPUT CHARS: %i/9", name.size(), 8), 600, 600, 20, YELLOW);
-
-			if (mouseOnText)
-			{
-				if (letterCount < 9)
-				{
-					// Draw blinking underscore char
-					if (((framesCounter / 20) % 2) == 0)
-					{
-						int textWidth = MeasureText(name.c_str(), 40); 
-						DrawText("_", (int)textBox.x + 8 + textWidth, (int)textBox.y + 12, 40, MAROON);
-					}
-
-				}
-				else
-				{
-					//Name needs to be shorter
-					DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
-				}
-				
-			}
-
-			// Explain how to continue when name is input
-			if (!name.empty())
-			{
-				DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
-			}
-
-		}
-		else {
-			if (!newHighScore) {
-				// If no highscore or name is entered, show scoreboard and call it a day
-				DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
-
-				DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
-
-				for (int i = 0; i < Leaderboard.size(); i++)
-				{
-					DrawText(Leaderboard[i].name.c_str(), 50, 140 + (i * 40), 40, YELLOW); 
-					DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
-				}
-			}
-		
-		}
-
+		RenderEndScreen(); 
 
 		break;
 	default:
@@ -452,6 +376,71 @@ void Game::RenderGamePlay() {
 	for (const auto& alien : Aliens)
 	{
 		alien.Render(resources.alienTexture);
+	}
+}
+
+void Game::RenderEndScreen() {
+	if (newHighScore) {
+		RenderHighScoreInput();
+	}
+	else
+	{
+		RenderLeaderboard(); 
+	}
+}
+
+void Game::RenderHighScoreInput() {
+	DrawText("NEW HIGHSCORE!", 600, 300, 60, YELLOW);
+	DrawText("PLACE MOUSE OVER INPUT BOX!", 600, 400, 20, YELLOW);
+
+	DrawRectangleRec(textBox, LIGHTGRAY);
+
+	Color borderColor = mouseOnText ? RED : DARKGRAY;
+	DrawRectangleLines((int)textBox.x, (int)textBox.y, (int)textBox.width, (int)textBox.height, borderColor);
+
+	if (name.empty())
+	{
+		DrawText(" ", (int)textBox.x + 5, (int)textBox.y + 8, 40, GRAY);
+	}
+	else
+	{
+		DrawText(name.c_str(), (int)textBox.x + 5, (int)textBox.y + 8, 40, MAROON);
+	}
+
+	DrawText(TextFormat("INPUT CHARS: %i/9", name.size()), 600, 600, 20, YELLOW);
+
+	if (mouseOnText)
+	{
+		RenderCursorBlink();
+	}
+
+	if (!name.empty())
+	{
+		DrawText("PRESS ENTER TO CONTINUE", 600, 800, 40, YELLOW);
+	}
+
+}
+
+void Game::RenderCursorBlink() {
+	if (letterCount < 9 && ((framesCounter / 20) % 2) == 0)
+	{
+		int textWidth = MeasureText(name.c_str(), 40);
+		DrawText("_", (int)textBox.x + 8 + textWidth, (int)textBox.y + 12, 40, MAROON);
+	}
+	else if (letterCount >= 9)
+	{
+		DrawText("Press BACKSPACE to delete chars...", 600, 650, 20, YELLOW);
+	}
+}
+
+void Game::RenderLeaderboard() {
+	DrawText("PRESS ENTER TO CONTINUE", 600, 200, 40, YELLOW);
+	DrawText("LEADERBOARD", 50, 100, 40, YELLOW);
+
+	for (int i = 0; i < Leaderboard.size(); i++)
+	{
+		DrawText(Leaderboard[i].name.c_str(), 50, 140 + (i * 40), 40, YELLOW);
+		DrawText(TextFormat("%i", Leaderboard[i].score), 350, 140 + (i * 40), 40, YELLOW);
 	}
 }
 
