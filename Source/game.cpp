@@ -811,13 +811,13 @@ void Background::Initialize(int starAmount)
 	{
 		Star newStar;
 
-		newStar.initPosition.x = GetRandomValue(-150, GetScreenWidth() + 150);
-		newStar.initPosition.y = GetRandomValue(0, GetScreenHeight());
+		newStar.initPosition.x = (float)GetRandomValue(-150, GetScreenWidth() + 150);
+		newStar.initPosition.y = (float)GetRandomValue(0, GetScreenHeight());
 		
 		//random color?
 		newStar.color = SKYBLUE;
 
-		newStar.size = GetRandomValue(1, 4) / static_cast<float>(2);
+		newStar.size = (float)GetRandomValue(1, 4) / static_cast<float>(2);
 
 		Stars.push_back(newStar);
 
