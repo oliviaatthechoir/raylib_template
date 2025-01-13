@@ -252,19 +252,26 @@ void Game::Update()
 	case State::ENDSCREEN:
 		//Code
 	
-		//Exit endscreen
-		if (IsKeyReleased(KEY_ENTER) && !newHighScore)
+		if (!newHighScore)
 		{
-			Continue();
+			// Wait for player input (press Enter) to transition to the start screen
+			if (IsKeyPressed(KEY_ENTER))
+			{
+				Continue();  // Reset the game state for a new game
+				return;
+			}
 		}
 
-	
-
+		// If the player is entering a new high score
 		if (newHighScore)
 		{
-			if (CheckCollisionPointRec(GetMousePosition(), textBox)) mouseOnText = true;
-			else mouseOnText = false;
+			// Check if the mouse is over the text box
+			if (CheckCollisionPointRec(GetMousePosition(), textBox))
+				mouseOnText = true;
+			else
+				mouseOnText = false;
 
+			// Handle cursor and input logic
 			if (mouseOnText)
 			{
 				// Set the window's cursor to the I-Beam
@@ -279,21 +286,24 @@ void Game::Update()
 					// NOTE: Only allow keys in range [32..125]
 					if ((key >= 32) && (key <= 125) && (name.size() < 9))
 					{
-						name += static_cast<char>(key);
-						
+						name += static_cast<char>(key); // Append character to name
 					}
 
 					key = GetCharPressed();  // Check next character in the queue
 				}
 
-				//Remove chars 
+				// Remove characters if backspace is pressed
 				if (IsKeyPressed(KEY_BACKSPACE) && !name.empty())
 				{
-					name.pop_back(); 
+					name.pop_back();
 				}
 			}
-			else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			else
+			{
+				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			}
 
+			// Handle blinking cursor animation
 			if (mouseOnText)
 			{
 				framesCounter++;
@@ -303,24 +313,16 @@ void Game::Update()
 				framesCounter = 0;
 			}
 
-			// If the name is right legth and enter is pressed, exit screen by setting highscore to false and add 
-			// name + score to scoreboard
+			// If the name is the right length and Enter is pressed, finalize the high score input
 			if (IsKeyPressed(KEY_ENTER) && !name.empty())
 			{
-
-				InsertNewHighScore(name);
-
-				newHighScore = false;
-
-				
+				InsertNewHighScore(name);  // Save the player's name and score
+				newHighScore = false;     // Exit high score input mode
 			}
-
-
 		}
-		
-
 
 		break;
+
 	default:
 		//SHOULD NOT HAPPEN
 		break;
