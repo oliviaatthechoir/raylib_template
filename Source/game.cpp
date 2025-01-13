@@ -252,14 +252,12 @@ void Game::Update()
 	case State::ENDSCREEN:
 		//Code
 	
-		if (!newHighScore)
+		if (!newHighScore && IsKeyPressed(KEY_ENTER))
 		{
-			// Wait for player input (press Enter) to transition to the start screen
-			if (IsKeyPressed(KEY_ENTER))
-			{
-				Continue();  // Reset the game state for a new game
-				return;
-			}
+			
+			Continue();  // Reset the game state for a new game
+			return;
+			
 		}
 
 		// If the player is entering a new high score
