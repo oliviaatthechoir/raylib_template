@@ -627,15 +627,15 @@ void Player::Update()
 		direction++;
 	}
 
-	x_pos += speed * direction;
+	x_pos += speed * (float)direction;
 
 	if (x_pos < 0 + radius)
 	{
 		x_pos = 0 + radius;
 	}
-	else if (x_pos > GetScreenWidth() - radius)
+	else if (x_pos > (float)GetScreenWidth() - radius)
 	{
-		x_pos = GetScreenWidth() - radius;
+		x_pos = (float)GetScreenWidth() - radius;
 	}
 
 
