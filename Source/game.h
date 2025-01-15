@@ -84,7 +84,7 @@ struct Game
 
 	// Rendering core loop functions 
 	void RenderStartScreen() const;
-	void RenderGamePlay(const std::vector<Alien>& aliens, const std::vector<Projectile>& projectiles, const std::vector<Wall>& wall, const Player& player);
+	void RenderGamePlay(const std::vector<Alien>& aliens, const std::vector<Projectile>& projectiles, const std::vector<Wall>& walls, const Player& player);
 	void RenderEndScreen();
 	
 	// Score functions 
