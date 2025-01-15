@@ -125,7 +125,6 @@ struct Background
 struct Game
 {
 public: 
-
 	Game() = default;
 
 	// Gamestate
@@ -194,6 +193,7 @@ public:
 	Background background;
 
 
+	Resources resources; 
 
 	Vector2 playerPos;
 	Vector2 alienPos; 
