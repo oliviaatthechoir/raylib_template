@@ -18,3 +18,4 @@ public:
 	Texture2D laserTexture;
 
 };
+

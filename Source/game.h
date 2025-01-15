@@ -151,7 +151,7 @@ struct Game
 	void End();
 
 	void Continue();
-	void Launch();
+	
 
 	void Update();
 
