@@ -6,6 +6,8 @@
 #include <fstream>
 #include <algorithm> 
 
+//TODO: this should only be game 
+
 // MATH FUNCTIONS
 float lineLength(Vector2 A, Vector2 B) //Uses pythagoras to calculate the length of a line
 {
