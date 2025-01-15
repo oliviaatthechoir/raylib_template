@@ -1,21 +1,19 @@
 #pragma once
 #include "raylib.h"
 #include "vector"
+#include "Texture.h"
 
 
-struct Resources 
+class Resources 
 {
 public: 
-	Resources(); 
-	~Resources(); 
+	Texture AlienTexture;
+	Texture WallTexture; 
+	Texture ShipTexture; 
 
-	void Load();
+	Resources() : AlienTexture("Assets/Alien.png"),
+		WallTexture("Assets/Barrier.png"), ShipTexture("Assets/Ship1.png") { }
 
-
-	std::vector<Texture2D> shipTextures;
-	Texture2D alienTexture;
-	Texture2D barrierTexture;
-	Texture2D laserTexture;
 
 };
 

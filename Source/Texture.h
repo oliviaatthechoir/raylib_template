@@ -3,6 +3,7 @@
 #include <string>
 
 class Texture {
+public: 
 	Texture2D texture;
 
 	Texture(const std::string& path) {

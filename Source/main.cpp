@@ -39,11 +39,10 @@ int main(void)
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-    Resources resources; 
-    Game game;  
-    game.resources = resources; 
-   
     
+    Game game;  
+    
+ 
     //--------------------------------------------------------------------------------------
 
     InitAudioDevice();
@@ -59,6 +58,7 @@ int main(void)
    
 
         game.Update();
+        game.Launch(); 
       
 
         // Draw
