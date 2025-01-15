@@ -1,10 +1,16 @@
 #include "game.h"
 #include "MathUtils.h"
+#include "Player.h"
+#include "Projectiles.h"
+#include "Alien.h"
+#include "Walls.h"
 #include <iostream>
 #include <vector>
+#include <thread>
 #include <chrono>
 #include <fstream>
 #include <algorithm> 
+
 
 
 //TODO: this should only be game 
@@ -18,6 +24,7 @@ void Game::Start()
 	Background newBackground;
 	newBackground.Initialize(600);
 	background = newBackground;
+
 }
 
 void Game::End()
@@ -25,7 +32,7 @@ void Game::End()
 	//SAVE SCORE AND UPDATE SCOREBOARD
 	Projectiles.clear();
 	Walls.clear();
-	//Aliens.clear();
+	Aliens.clear();
 	newHighScore = CheckNewHighScore();
 	gameState = State::ENDSCREEN;
 }
@@ -58,132 +65,7 @@ void Game::Update()
 			End();
 		}
 
-		
-		
-		//Update Aliens and Check if they are past player
-		for (auto& alien : Aliens)
-		{
-			alien.Update(); 
-
-			if (alien.position.y > GetScreenHeight() - player.player_base_height)
-			{
-				End();
-			}
-		}
-
-		//End game if player dies
-		if (player.lives < 1)
-		{
-			End();
-		}
-
-		//Spawn new aliens if aliens run out
-		if (Aliens.size() < 1)
-		{
-			SpawnAliens();
-		}
-
-
-		// Update background with offset
-		playerPos = { player.x_pos, player.player_base_height };
-		cornerPos = { 0, player.player_base_height };
-		offset = lineLength(playerPos, cornerPos) * -1;
-		background.Update(offset / 15);
-
-
-		//UPDATE PROJECTILE
-		for (auto& projectile : Projectiles)
-		{
-			projectile.Update(); 
-		}
-		//UPDATE PROJECTILE
-		for (auto& wall : Walls)
-		{
-			wall.Update(); 
-		}
-
-		//CHECK ALL COLLISONS HERE
-		for (auto& projectile : Projectiles)
-		{
-			if (projectile.type == EntityType::PLAYER_PROJECTILE)
-			{
-				for (auto& alien : Aliens)
-				{
-					if (CheckCollision(alien.position, alien.radius, projectile.lineStart, projectile.lineEnd))
-					{
-						// Kill!
-						std::cout << "Hit! \n";
-						// Set them as inactive, will be killed later
-						projectile.active = false;
-						alien.active = false;
-						score += 100;
-					}
-				}
-			}
-
-			//ENEMY PROJECTILES HERE
-			for (auto& projectile : Projectiles)
-			{
-				if (projectile.type == EntityType::ENEMY_PROJECTILE)
-				{
-					if (CheckCollision({player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, projectile.lineStart, projectile.lineEnd))
-					{
-						std::cout << "dead!\n"; 
-						projectile.active = false; 
-						player.lives -= 1; 
-					}
-				}
-			}
-
-
-			
-		}
-
-		//MAKE PROJECTILE
-		if (IsKeyPressed(KEY_SPACE))
-		{
-			auto window_height = (float)GetScreenHeight();
-			Projectile newProjectile;
-			newProjectile.position.x = player.x_pos;
-			newProjectile.position.y = window_height - 130;
-			newProjectile.type = EntityType::PLAYER_PROJECTILE;
-			Projectiles.push_back(newProjectile);
-		}
-
-		//Aliens Shooting
-		shootTimer += 1;
-		if (shootTimer > 59) //once per second
-		{
-			int randomAlienIndex = 0;
-
-			if (Aliens.size() > 1)
-			{
-				randomAlienIndex = rand() % Aliens.size();
-			}
-
-			Projectile newProjectile;
-			newProjectile.position = Aliens[randomAlienIndex].position;
-			newProjectile.position.y += 40;
-			newProjectile.speed = -15;
-			newProjectile.type = EntityType::ENEMY_PROJECTILE;
-			Projectiles.push_back(newProjectile);
-			shootTimer = 0;
-		}
-
-		// REMOVE INACTIVE/DEAD ENITITIES
-		std::erase_if(Projectiles, [](const auto& projectile) {
-			return !projectile.active; 
-		});
-
-		std::erase_if(Aliens, [](const auto& alien) {
-			return !alien.active; 
-		}); 
-
-		std::erase_if(Walls, [](const auto& wall) {
-			return !wall.active; 
-		}); 
-
-			
+		HandleGamePlay(); 
 
 	break;
 	case State::ENDSCREEN:
@@ -209,6 +91,12 @@ void Game::HandleGamePlay() {
 		End();
 		return;
 	}
+
+	UpdateEntities();
+	HandleCollisions(); 
+	ManageProjectiles(); 
+	BackgroundBuff(); 
+	Spawn(); 
 }
 
 void Game::HandleEndScreen() {
@@ -219,6 +107,119 @@ void Game::HandleEndScreen() {
 
 	if (newHighScore) {
 		HandleHighScoreInput();
+	}
+}
+
+void UpdateEntities() {
+	for (auto& alien : Aliens) {
+		alien.Update();
+
+		if (alien.position.y > GetScreenHeight() - player.player_base_height) {
+			End();
+			return;
+		}
+	}
+
+	player.Update();
+
+	//UPDATE PROJECTILE
+	for (auto& projectile : Projectiles)
+	{
+		projectile.Update();
+	}
+	//UPDATE PROJECTILE
+	for (auto& wall : Walls)
+	{
+		wall.Update();
+	}
+
+	if (player.lives < 1) {
+		End();
+		return;
+	}
+
+	// REMOVE INACTIVE/DEAD ENITITIES
+	std::erase_if(Projectiles, [](const auto& projectile) {
+		return !projectile.active;
+		});
+
+	std::erase_if(Aliens, [](const auto& alien) {
+		return !alien.active;
+	});
+
+	std::erase_if(Walls, [](const auto& wall) {
+		return !wall.active;
+	});
+	
+}
+
+void HandleCollisions() {
+	for (auto& projectile : Projectiles) {
+		if (projectile.type == EntityType::PLAYER_PROJECTILE) {
+			for (auto& alien : Aliens) {
+				if (CheckCollision(alien.position, alien.radius, projectile.lineStart, projectile.lineEnd)) {
+					alien.active = false;
+					projectile.active = false;
+					score += 100;
+				}
+			}
+		}
+		else if (projectile.type == EntityType::ENEMY_PROJECTILE) {
+			if (CheckCollision({ player.x_pos, GetScreenHeight() - player.player_base_height }, player.radius, projectile.lineStart, projectile.lineEnd)) {
+				projectile.active = false;
+				player.lives -= 1;
+			}
+		}
+	}
+}
+
+void ManageProjectiles() {
+	//MAKE PROJECTILE
+	if (IsKeyPressed(KEY_SPACE))
+	{
+		auto window_height = (float)GetScreenHeight();
+		Projectile newProjectile;
+		newProjectile.position.x = player.x_pos;
+		newProjectile.position.y = window_height - 130;
+		newProjectile.type = EntityType::PLAYER_PROJECTILE;
+		Projectiles.push_back(newProjectile);
+	}
+
+	shootTimer += 1;
+	if (shootTimer > 59) //once per second
+	{
+		int randomAlienIndex = 0;
+
+		if (Aliens.size() > 1)
+		{
+			randomAlienIndex = rand() % Aliens.size();
+		}
+
+		Projectile newProjectile;
+		newProjectile.position = Aliens[randomAlienIndex].position;
+		newProjectile.position.y += 40;
+		newProjectile.speed = -15;
+		newProjectile.type = EntityType::ENEMY_PROJECTILE;
+		Projectile.push_back(newProjectile);
+		shootTimer = 0;
+	}
+
+	std::erase_if(Projectile, [](const auto& projectile) { return !projectile.active; });
+}
+
+void BackgroundBuff() {
+	
+	playerPos = { player.x_pos, player.player_base_height };
+	cornerPos = { 0, player.player_base_height };
+	offset = lineLength(playerPos, cornerPos) * -1;
+	background.Update(offset / 15);
+}
+
+void Spawn(std::vector<Alien>& aliens) {
+	//Spawn new aliens if aliens run out
+	if (Alien.size() < 1)
+	{
+		SpawnAliens(&aliens);
 	}
 }
 

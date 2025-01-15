@@ -60,6 +60,12 @@ struct Game
 	Resources resources;
 	Background background;
 
+	std::vector<Projectile> Projectiles;
+	std::vector<Wall> Walls;
+	std::vector<Alien> Aliens;
+
+	Player player; 
+
 	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
 
 	int formationWidth = 8;
@@ -99,7 +105,6 @@ struct Game
 	void RenderLeaderboard(); 
 
 
-
 	//TEXTBOX ENTER
 	std::string name = "";     //One extra space required for null terminator char '\0'
 	int letterCount = 0;
@@ -107,7 +112,9 @@ struct Game
 	Rectangle textBox = { 600, 500, 225, 50 };
 	bool mouseOnText = false;
 
+	float shootTimer = 0;
+
 	int framesCounter = 0;
-	bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom)
-	bool operator==(const Game& other) const = default;
 };
+
+bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom);

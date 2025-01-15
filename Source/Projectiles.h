@@ -14,7 +14,7 @@ public:
 	bool active = true;
 	EntityType type; 
 
-	std::vector<Projectile> Projectiles;
+	std::vector<Projectile> projectile;
 	
 
 	void Update();

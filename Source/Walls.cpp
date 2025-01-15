@@ -1,6 +1,8 @@
 #include "Walls.h"
+#include <iostream>
 #include "MathUtils.h"
 #include "game.h"
+#include "Projectiles.h"
 
 
 void Wall::Initialize() {
@@ -20,18 +22,6 @@ void Wall::Initialize() {
 }
 
 void Wall::Update() {
-	for (auto& wall : Walls)
-	{
-		if (CheckCollision(wall.position, (float)wall.radius, projectile.lineStart, projectile.lineEnd))
-		{
-			// Kill!
-			std::cout << "Hit! \n";
-			// Set them as inactive, will be killed later
-			projectile.active = false;
-			wall.health -= 1;
-		}
-	}
-
 	if (health < 1)
 	{
 		active = false;
