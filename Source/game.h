@@ -2,11 +2,11 @@
 #include "raylib.h"
 #include "Alien.h"
 #include "Player.h"
-
+#include "Walls.h"
+#include "Projectiles.h"
 #include <vector>
 #include "Resources.h"
 #include <string>
-#include "Walls.h"
 
 
 enum struct State
@@ -91,6 +91,7 @@ struct Game
 	void InsertNewHighScore(const std::string_view& name);
 	bool CheckNewHighScore();
 	void SaveLeaderboard() const;
+	void HandleHighScoreInput(); 
 	
 	// UI functions 
 	void RenderHighScoreInput() const;
@@ -107,6 +108,6 @@ struct Game
 	bool mouseOnText = false;
 
 	int framesCounter = 0;
-
+	bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom)
 	bool operator==(const Game& other) const = default;
 };

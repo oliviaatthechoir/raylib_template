@@ -3,9 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-#include <thread>
 #include <fstream>
 #include <algorithm> 
+
 
 //TODO: this should only be game 
 
@@ -48,7 +48,6 @@ void Game::Update()
 		{
 			Start();
 
-
 		}
 
 		break;
@@ -59,8 +58,7 @@ void Game::Update()
 			End();
 		}
 
-		//Update Player
-		player.Update();
+		
 		
 		//Update Aliens and Check if they are past player
 		for (auto& alien : Aliens)
@@ -190,72 +188,7 @@ void Game::Update()
 	break;
 	case State::ENDSCREEN:
 		
-		if (!newHighScore && IsKeyPressed(KEY_ENTER))
-		{
-			
-			Continue();  
-			return;
-			
-		}
-
-		
-		if (newHighScore)
-		{
-			
-			if (CheckCollisionPointRec(GetMousePosition(), textBox))
-				mouseOnText = true;
-			else
-				mouseOnText = false;
-
-			
-			if (mouseOnText)
-			{
-				
-				SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-				
-				int key = GetCharPressed();
-
-				
-				while (key > 0)
-				{
-					
-					if ((key >= 32) && (key <= 125) && (name.size() < 9))
-					{
-						name += static_cast<char>(key); 
-					}
-
-					key = GetCharPressed(); 
-				}
-
-				
-				if (IsKeyPressed(KEY_BACKSPACE) && !name.empty())
-				{
-					name.pop_back();
-				}
-			}
-			else
-			{
-				SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-			}
-
-			
-			if (mouseOnText)
-			{
-				framesCounter++;
-			}
-			else
-			{
-				framesCounter = 0;
-			}
-
-			
-			if (IsKeyPressed(KEY_ENTER) && !name.empty())
-			{
-				InsertNewHighScore(name);  
-				newHighScore = false;     
-			}
-		}
+		HandleEndScreen(); 
 
 		break;
 
@@ -278,6 +211,16 @@ void Game::HandleGamePlay() {
 	}
 }
 
+void Game::HandleEndScreen() {
+	if (!newHighScore && IsKeyPressed(KEY_ENTER)) {
+		Continue();
+		return;
+	}
+
+	if (newHighScore) {
+		HandleHighScoreInput();
+	}
+}
 
 
 void Game::Render()
@@ -329,7 +272,7 @@ void Game::RenderGamePlay(const std::vector<Alien>& aliens, const std::vector<Pr
 
 	for (const auto& alien : aliens)
 	{
-		alien.Render(resources.alienTexture.texture);
+		alien.Render(resources.alienTexture);
 	}
 }
 
@@ -465,6 +408,54 @@ void Game::SaveLeaderboard() const
 	// CLOSE FILE
 }
 
+void Game::HandleHighScoreInput() {
+	if (CheckCollisionPointRec(GetMousePosition(), textBox))
+		mouseOnText = true;
+	else
+		mouseOnText = false;
+
+	if (mouseOnText)
+	{
+		SetMouseCursor(MOUSE_CURSOR_IBEAM);
+		int key = GetCharPressed();
+
+		while (key > 0)
+		{
+
+			if ((key >= 32) && (key <= 125) && (name.size() < 9))
+			{
+				name += static_cast<char>(key);
+			}
+
+			key = GetCharPressed();
+		}
+
+		if (IsKeyPressed(KEY_BACKSPACE) && !name.empty())
+		{
+			name.pop_back();
+		}
+	}
+	else
+	{
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	}
+
+
+	if (mouseOnText)
+	{
+		framesCounter++;
+	}
+	else
+	{
+		framesCounter = 0;
+	}
+
+	if (IsKeyPressed(KEY_ENTER) && !name.empty())
+	{
+		InsertNewHighScore(name);
+		newHighScore = false;
+	}
+}
 
 
 

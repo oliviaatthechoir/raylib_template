@@ -1,4 +1,7 @@
 #include "Walls.h"
+#include "MathUtils.h"
+#include "game.h"
+
 
 void Wall::Initialize() {
 	// creating walls 
