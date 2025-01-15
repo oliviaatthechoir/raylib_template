@@ -1,26 +1,11 @@
 #include "Resources.h"
 #include <iostream>;
 
-void Resources::Load()
-{
-	std::cout << "Loading resources...\n";
-	alienTexture = LoadTexture("./Assets/Alien.png");
-	barrierTexture = LoadTexture("./Assets/Barrier.png");
-
-	shipTextures.push_back(LoadTexture("./Assets/Ship1.png"));
-	shipTextures.push_back(LoadTexture("./Assets/Ship2.png"));
-	shipTextures.push_back(LoadTexture("./Assets/Ship3.png"));
-
-	laserTexture = LoadTexture("./Assets/Laser.png");
+Resources::Resources() : alienTexture("Assets/Alien.png"),
+barrierTexture("Assets/Barrier.png"), laserTexture("Assets/Laser.png") {
+	shipTextures.emplace_back("Assets/Ship1.png"); 
+	shipTextures.emplace_back("Assets/Ship2.png"); 
+	shipTextures.emplace_back("Assets/Ship3.png"); 
 }
 
-Resources::~Resources() {
 
-	UnloadTexture(alienTexture);
-	UnloadTexture(barrierTexture);
-	UnloadTexture(laserTexture);
-
-	for (const auto& texture : shipTextures) {
-		UnloadTexture(texture);
-	}
-}

@@ -7,7 +7,7 @@ public:
 	Texture2D texture;
 
 	Texture(const std::string_view path) {
-		texture = LoadTexture(path.c_str());
+		texture = LoadTexture(path.data());
 
 	}
 

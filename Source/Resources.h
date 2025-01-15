@@ -1,18 +1,31 @@
 #pragma once
+#ifndef RESOURCES_H
+#define RESOURCES_H
+
+
+
+#include <string>
 #include "raylib.h"
 #include "vector"
+#include "Texture.h"
 
 
-struct Resources
+class Resources
 {
-	void Load();
+public:
 
-	~Resources();
-
+	Texture alienTexture;
+	Texture barrierTexture;
+	Texture laserTexture;
 	std::vector<Texture2D> shipTextures;
-	Texture2D alienTexture;
-	Texture2D barrierTexture;
-	Texture2D laserTexture;
 
-};
+	Resources(); 
+
+};  
+
+
+#endif // !RESOURCES_h
+
+
+
 

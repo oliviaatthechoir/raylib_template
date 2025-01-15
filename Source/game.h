@@ -125,6 +125,7 @@ struct Background
 struct Game
 {
 
+	Resources resources;
 
 	// Gamestate
 	State gameState = State::STARTSCREEN; 
@@ -154,7 +155,7 @@ struct Game
 
 	void Continue();
 	
-	void Launch(); 
+	
 
 	void Update();
 
@@ -180,7 +181,6 @@ struct Game
 
 
 	// Entity Storage and Resources
-	Resources resources;
 
 	Player player;
 
