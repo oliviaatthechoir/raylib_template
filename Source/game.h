@@ -138,6 +138,8 @@ struct Game
 	//Aliens shooting
 	float shootTimer = 0;
 
+	Rectangle rec = { 0, 0 ,0 ,0 }; 
+
 	int formationWidth = 8;
 	int formationHeight = 5;
 	int alienSpacing = 80;
