@@ -124,8 +124,7 @@ struct Background
 
 struct Game
 {
-public: 
-	Game() = default;
+
 
 	// Gamestate
 	State gameState = State::STARTSCREEN; 
@@ -192,8 +191,6 @@ public:
 	
 	Background background;
 
-
-	Resources resources; 
 
 	Vector2 playerPos;
 	Vector2 alienPos; 

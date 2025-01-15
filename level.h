@@ -11,7 +11,7 @@ struct Entity
 	Entity(float x, float y) : x(x), y(y) {}
 
 	void Print() const;
-	
+		
 
 
 };
