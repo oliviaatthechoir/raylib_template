@@ -19,7 +19,7 @@ public:
 	int speed = 2;
 
 	float shootTimer = 0;
-
+	Vector2 alienPos;
 	std::vector<Alien> Aliens;
  
 	void Initialize(Vector2 startPosition, int movementSpeed); 

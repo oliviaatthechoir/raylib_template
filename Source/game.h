@@ -1,8 +1,12 @@
 #pragma once
 #include "raylib.h"
+#include "Alien.h"
+#include "Player.h"
+
 #include <vector>
 #include "Resources.h"
 #include <string>
+#include "Walls.h"
 
 
 enum struct State
@@ -24,62 +28,6 @@ struct PlayerData
 {
 	std::string name;
 	int score;
-};
-
-
-
-
-struct Projectile
-{
-public: 
-	// INITIALIZE PROJECTILE WHILE DEFINING IF ITS PLAYER OR ENEMY 
-	Vector2 position = {0,0};
-	int speed = 15; 
-	bool active = true;  
-	EntityType type = {};
-
-	// LINE WILL UPDATE WITH POSITION FOR CALCULATIONS
-	Vector2 lineStart = { 0, 0 };
-	Vector2 lineEnd = { 0, 0 };
-
-	void Update();
-
-	void Render(GameTexture& texture) const;
-};
-
-struct Wall 
-{
-public: 
-	Vector2 position; 
-	Rectangle rec; 
-	bool active; 
-	Color color; 
-	int health = 50;
-	int radius = 60;
-
-
-	void Render(GameTexture& texture) const; 
-	void Update(); 
-};
-
-struct Alien
-{
-public:
-	
-	Color color = WHITE; 
-	Vector2 position = {0, 0};
-	int x = 0; 
-	int y = 0; 
-	float radius = 30;
-	bool active = true;  
-	bool moveRight = true; 
-	
-	EntityType type = EntityType::ENEMY; 
-
-	int speed = 2; 
-		 
-	void Update(); 
-	void Render(Texture2D texture) const; 
 };
 
 
@@ -105,88 +53,50 @@ struct Background
 
 struct Game
 {
-
-	
-
-	// Gamestate
-	State gameState = State::STARTSCREEN; 
-
-	// Score
 	int score;
-
-	// for later, make a file where you can adjust the number of walls (config file) 
-	int wallCount = 5;
-
-	//Aliens shooting
-	
-
-	Rectangle rec = { 0, 0 ,0 ,0 }; 
-
-	
-
+	State gameState = State::STARTSCREEN; 
 	bool newHighScore = false;
-	
-
-	void Start();
-	void End();
-
-	void Continue();
-	
-	void Launch() const; 
-
-	void Update();
-
-	void HandleStartScreen(); 
-	void HandleGamePlay(); 
-	void HandleEndScreen(); 
-
-	void Render();
-	void RenderStartScreen() const; 
-	void RenderGamePlay(); 
-	void RenderEndScreen(); 
-
-	void RenderHighScoreInput() const;
-	void RenderCursorBlink() const;
-	void RenderLeaderboard(); 
-
-	void SpawnAliens();
-
-	bool CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineTop, Vector2 lineBottom) const;
-
-	bool CheckNewHighScore();
-
-	void InsertNewHighScore(const std::string_view& name);
-
-
-	void SaveLeaderboard() const;
-
-
-	// Entity Storage and Resources
 
 	Resources resources;
-
-
-	std::vector<Projectile> Projectiles;
-
-	std::vector<Wall> Walls;
-
-	
-
-	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
-	
 	Background background;
 
-
-	Vector2 playerPos;
-	Vector2 alienPos; 
-	Vector2 cornerPos;
-	float offset;
+	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
 
 	int formationWidth = 8;
 	int formationHeight = 5;
 	int alienSpacing = 80;
 	int formationX = 100;
 	int formationY = 50;
+
+	//Core functions 
+	void Start();
+	void End();
+	void Continue();
+	void Update();
+	void Render();
+	void SpawnAliens(std::vector<Alien>& aliens); 
+
+	// Update functions 
+	void HandleStartScreen(); 
+	void HandleGamePlay(); 
+	void HandleEndScreen(); 
+
+
+	// Rendering core loop functions 
+	void RenderStartScreen() const;
+	void RenderGamePlay(const std::vector<Alien>& aliens, const std::vector<Projectile>& projectiles, const std::vector<Wall>& wall, const Player& player);
+	void RenderEndScreen();
+	
+	// Score functions 
+	void InsertNewHighScore(const std::string_view& name);
+	bool CheckNewHighScore();
+	void SaveLeaderboard() const;
+	
+	// UI functions 
+	void RenderHighScoreInput() const;
+	void RenderCursorBlink() const;
+	void RenderLeaderboard(); 
+
 
 
 	//TEXTBOX ENTER
