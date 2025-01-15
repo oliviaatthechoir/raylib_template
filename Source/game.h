@@ -26,26 +26,7 @@ struct PlayerData
 	int score;
 };
 
-struct Player
-{
-public:
 
-	float x_pos = 0;
-	float speed = 7;
-	float player_base_height = 70.0f;  
-	float radius = 50;
-	int lives = 3;
-	int direction = 0;
-	int activeTexture = 0;
-	float timer = 0;
-
-	EntityType type = EntityType::PLAYER;
-
-	void Initialize();
-	void Render(Texture2D texture) const;
-	void Update();
-	
-};
 
 
 struct Projectile
@@ -137,15 +118,11 @@ struct Game
 	int wallCount = 5;
 
 	//Aliens shooting
-	float shootTimer = 0;
+	
 
 	Rectangle rec = { 0, 0 ,0 ,0 }; 
 
-	int formationWidth = 8;
-	int formationHeight = 5;
-	int alienSpacing = 80;
-	int formationX = 100;
-	int formationY = 50;
+	
 
 	bool newHighScore = false;
 	
@@ -158,6 +135,10 @@ struct Game
 	void Launch() const; 
 
 	void Update();
+
+	void HandleStartScreen(); 
+	void HandleGamePlay(); 
+	void HandleEndScreen(); 
 
 	void Render();
 	void RenderStartScreen() const; 
@@ -184,13 +165,12 @@ struct Game
 
 	Resources resources;
 
-	Player player;
 
 	std::vector<Projectile> Projectiles;
 
 	std::vector<Wall> Walls;
 
-	std::vector<Alien> Aliens;
+	
 
 	std::vector<PlayerData> Leaderboard = { {"Player 1", 500}, {"Player 2", 400}, {"Player 3", 300}, {"Player 4", 200}, {"Player 5", 100} };
 	
@@ -202,6 +182,11 @@ struct Game
 	Vector2 cornerPos;
 	float offset;
 
+	int formationWidth = 8;
+	int formationHeight = 5;
+	int alienSpacing = 80;
+	int formationX = 100;
+	int formationY = 50;
 
 
 	//TEXTBOX ENTER

@@ -53,8 +53,7 @@ void Game::Start()
 	player = newPlayer;
 	player.Initialize();
 
-	//creating aliens
-	SpawnAliens();
+	
 	
 
 	//creating background
@@ -74,7 +73,7 @@ void Game::End()
 	//SAVE SCORE AND UPDATE SCOREBOARD
 	Projectiles.clear();
 	Walls.clear();
-	Aliens.clear();
+	//Aliens.clear();
 	newHighScore = CheckNewHighScore();
 	gameState = State::ENDSCREEN;
 }
@@ -326,6 +325,20 @@ void Game::Update()
 	}
 }
 
+void Game::HandleStartScreen() {
+	if (IsKeyReleased(KEY_SPACE)) {
+		Start();
+	}
+}
+
+void Game::HandleGamePlay() {
+	if (IsKeyReleased(KEY_Q)) {
+		End();
+		return;
+	}
+}
+
+
 
 void Game::Render()
 {
@@ -444,21 +457,7 @@ void Game::RenderLeaderboard() {
 	}
 }
 
-void Game::SpawnAliens()
-{
-	for (int row = 0; row < formationHeight; row++) {
-		for (int col = 0; col < formationWidth; col++) {
-			auto newAlien = Alien();
-			newAlien.active = true;
-			newAlien.position.x = (float)formationX + 450 + ((float)col * (float)alienSpacing);
-			newAlien.position.y = (float)formationY + ((float)row * (float)alienSpacing);
-			Aliens.push_back(newAlien);
-			std::cout << "Find Alien -X:" << newAlien.position.x << std::endl;
-			std::cout << "Find Alien -Y:" << newAlien.position.y << std::endl;
-		}
-	}
 
-}
 
 bool Game::CheckNewHighScore()
 {
@@ -591,75 +590,8 @@ bool Game::CheckCollision(Vector2 circlePos, float circleRadius, Vector2 lineSta
 
 }
 
-void Player::Initialize() 
-{
-	auto window_width = (float)GetScreenWidth();
-	x_pos = window_width / 2;
-	std::cout<< "Find Player -X:" << GetScreenWidth() / 2 << "Find Player -Y" << (float)GetScreenHeight() - player_base_height << std::endl;
-}
-
-void Player::Update() 
-{
-
-	//Movement
-	direction = 0;
-	if (IsKeyDown(KEY_LEFT))
-	{
-		direction--;
-	}
-	if (IsKeyDown(KEY_RIGHT))
-	{
-		direction++;
-	}
-
-	x_pos += speed * (float)direction;
-
-	if (x_pos < 0 + radius)
-	{
-		x_pos = 0 + radius;
-	}
-	else if (x_pos > (float)GetScreenWidth() - radius)
-	{
-		x_pos = (float)GetScreenWidth() - radius;
-	}
 
 
-	//Determine frame for animation
-	timer += GetFrameTime();
-
-	if (timer > 0.4 && activeTexture == 2)
-	{
-		activeTexture = 0;
-		timer = 0;
-	}
-	else if (timer > 0.4)
-	{
-		activeTexture++;
-		timer = 0;
-	}
-
-	
-}
-
-void Player::Render(Texture2D texture) const
-{
-	auto window_height = (float)GetScreenHeight(); 
-
-	DrawTexturePro(texture,
-		{
-			0,
-			0,
-			352,
-			352,
-		},
-		{
-			x_pos, window_height - player_base_height,
-			100,
-			100,
-		}, { 50, 50 },
-		0,
-		WHITE);
-}
 
 
 
