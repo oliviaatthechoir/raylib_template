@@ -83,9 +83,9 @@ void Game::Continue()
 	gameState = State::STARTSCREEN;
 }
 
+void Game::Launch() const {
 
-
-
+}
 
 void Game::Update()
 {
@@ -359,7 +359,7 @@ void Game::RenderGamePlay() {
 	DrawText(TextFormat("Score: %i", score), 50, 20, 40, YELLOW);
 	DrawText(TextFormat("Lives: %i", player.lives), 50, 70, 40, YELLOW);
 
-	player.Render(resources.shipTextures[player.activeTexture]);
+	player.Render(resources.shipTextures[player.activeTexture].texture);
 
 	for (const auto& projectile : Projectiles)
 	{
@@ -373,7 +373,7 @@ void Game::RenderGamePlay() {
 
 	for (const auto& alien : Aliens)
 	{
-		alien.Render(resources.alienTexture);
+		alien.Render(resources.alienTexture.texture);
 	}
 }
 
@@ -678,10 +678,10 @@ void Projectile::Update()
 	}
 }
 
-void Projectile::Render(Texture2D texture) const 
+void Projectile::Render(GameTexture& texture) const 
 {
 	
-	DrawTexturePro(texture,
+	DrawTexturePro(texture.texture,
 		{
 			0,
 			0,
@@ -698,9 +698,9 @@ void Projectile::Render(Texture2D texture) const
 		WHITE);
 }
 
-void Wall::Render(Texture2D texture) const
+void Wall::Render(GameTexture& texture) const
 {
-	DrawTexturePro(texture,
+	DrawTexturePro(texture.texture,
 		{
 			0,
 			0,

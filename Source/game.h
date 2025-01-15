@@ -63,7 +63,7 @@ public:
 
 	void Update();
 
-	void Render(Texture2D texture) const;
+	void Render(GameTexture& texture) const;
 };
 
 struct Wall 
@@ -77,7 +77,7 @@ public:
 	int radius = 60;
 
 
-	void Render(Texture2D texture) const; 
+	void Render(GameTexture& texture) const; 
 	void Update(); 
 };
 
@@ -125,7 +125,7 @@ struct Background
 struct Game
 {
 
-	Resources resources;
+	
 
 	// Gamestate
 	State gameState = State::STARTSCREEN; 
@@ -155,7 +155,7 @@ struct Game
 
 	void Continue();
 	
-	
+	void Launch() const; 
 
 	void Update();
 
@@ -181,6 +181,8 @@ struct Game
 
 
 	// Entity Storage and Resources
+
+	Resources resources;
 
 	Player player;
 

@@ -5,23 +5,35 @@
 
 
 #include <string>
+#include <array>
 #include "raylib.h"
 #include "vector"
-#include "Texture.h"
+
+struct GameTexture {
+	Texture2D texture; 
+	explicit GameTexture(std::string_view path) {
+		texture = LoadTexture(path.data()); 
+	}
 
 
-class Resources
+	~GameTexture() {
+		UnloadTexture(texture); 
+	}
+
+	
+
+
+	
+};
+
+
+struct Resources
 {
-public:
-
-	Texture alienTexture;
-	Texture barrierTexture;
-	Texture laserTexture;
-	std::vector<Texture2D> shipTextures;
-
-	Resources(); 
-
-};  
+	std::array<GameTexture, 3> shipTextures = { GameTexture("./Assets/Ship1.png"), GameTexture("./Assets/Ship2.png"), GameTexture("./Assets/Ship3.png") };
+	GameTexture alienTexture = GameTexture("./Assets/Alien.png");
+	GameTexture barrierTexture = GameTexture("./Assets/Barrier.png");
+	GameTexture laserTexture = GameTexture("./Assets/Laser.png");
+};
 
 
 #endif // !RESOURCES_h
