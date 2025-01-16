@@ -15,9 +15,16 @@ public:
 	int wallCount = 5;
 	std::vector<Wall> Walls;
 
+	Wall() {}; 
+
+	 Wall(Vector2 initialPosition = {0, 0}, Vector2 initialSize = {50, 50}, Color initialColor = WHITE)
+        : position(initialPosition), size(initialSize), color(initialColor) 
+    {}
 
 	void Initialize(); 
 	void Update();
 	void Render(const GameTexture& texture) const;
+
+	~Wall() = default; 
 
 };
