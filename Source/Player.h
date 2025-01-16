@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include <vector>
 
-struct Player
+class Player
 {
 public:
 
@@ -15,13 +15,21 @@ public:
 	int activeTexture = 0;
 	float timer = 0;
 
+	Player() = default; 
 
-	void Initialize();
+	 Player(float xPos, int lives = 3, float baseHeight = 70.0f, float radius = 50.0f, float speed = 7.0f) 
+	: x_pos(xPos), speed(speed), player_base_height(baseHeight), radius(radius), lives(lives) {
+		
+	}; 
+
+	
 	void Render(Texture2D texture) const;
 	void Update();
 
 	Vector2 playerPos;
 	Vector2 cornerPos;
 	float offset;
+
+	~Player() = default; 
 
 };
